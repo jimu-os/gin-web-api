@@ -23,4 +23,4 @@ else
 fi
 
 docker build -t $IMAGE_NAME .
-docker run -d -name=$CONTAINER_NAME --restart=always -p 8080:8080 app
+docker run -d --name=$CONTAINER_NAME --restart=always -p 8080:8080 app
