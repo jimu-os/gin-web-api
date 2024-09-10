@@ -21,10 +21,10 @@ RUN go mod download
 COPY ./ ./
 
 # Build
-RUN  go build -o /app
+RUN  go build -o /main
 
 # 配置暴露端口
 EXPOSE 8080/tcp
 
 # Run 容器运行默认命令
-CMD [ "/app" ]
+CMD [ "/main" ]
