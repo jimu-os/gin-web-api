@@ -1,15 +1,15 @@
 # syntax=docker/dockerfile:1
 
-FROM golang:1.23
+FROM golang:1.23 AS builder
 
 # 设置工作区
-WORKDIR /build
+WORKDIR /go_web
 
 # 设置环境变量
-ENV CGO_ENABLED=0 \
-    GOOS=linux \
-    GOARCH=amd64 \
-    GOPROXY=https://goproxy.cn,direct
+ENV CGO_ENABLED=0
+ENV GOOS=linux
+ENV GOARCH=amd64
+ENV GOPROXY=https://goproxy.cn,direct
 
 # 复制 go 依赖到容器
 COPY go.mod go.sum ./
@@ -24,8 +24,8 @@ COPY . .
 RUN  go build -o /main
 
 # 创建更小的镜像
-FROM scratch
-
+FROM alpine
+WORKDIR /
 COPY --from=builder /main /
 
 # 配置暴露端口
